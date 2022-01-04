@@ -42,3 +42,8 @@ const recipes = {
     tomato: 1,
   },
 };
+
+module.exports = {
+  ingredients,
+  recipes,
+};
