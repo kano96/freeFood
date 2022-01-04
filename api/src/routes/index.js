@@ -1,7 +1,6 @@
 const router = require("express").Router();
+const getFood = require("./getFood");
 
-const helloRoute = require("./hello");
-
-router.use("/hello", helloRoute);
+router.use("/getFood", getFood);
 
 module.exports = router;

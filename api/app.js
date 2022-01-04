@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 
 const router = require("./src/routes");
 
@@ -21,10 +20,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(router);
-
-app.use("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/src/html/index.html"));
-});
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
