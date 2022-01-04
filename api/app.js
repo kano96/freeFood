@@ -8,7 +8,7 @@ const { json, urlencoded } = express;
 
 const app = express();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3001;
 
 app.use(json());
 app.use(urlencoded({ extended: false }));
@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 app.use(router);
 
 app.use("/", (req, res) => {
-  res.send("First microservice");
+  res.sendFile(path.join(__dirname + "/src/html/index.html"));
 });
 
 app.listen(port, () => {
