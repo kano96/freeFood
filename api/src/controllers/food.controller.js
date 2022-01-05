@@ -1,6 +1,7 @@
 const { ingredients, recipes } = require("../db");
+const axios = require("axios");
 
-const numberOfRecipes = Object.keys(ingredients).length;
+const numberOfRecipes = 6;
 
 //look if there are enough ingredients for recipe
 function validateIngredients(recipe) {
@@ -32,11 +33,11 @@ async function buyIngredients(ingredientsNeeded) {
 
   while (notEnoughIngredients) {
     for (let ingredient of ingredientsToBuy) {
-      fetch(
-        `https://recruitment.alegra.com/api/farmers-market/buy/?ingredient=${ingredient}`
-      )
-        .then((response) => response.json())
-        .then((data) => (ingredients[ingredient] += data.quantitySold))
+      axios
+        .get(
+          `https://recruitment.alegra.com/api/farmers-market/buy/?ingredient=${ingredient}`
+        )
+        .then((res) => (ingredients[ingredient] += res.data.quantitySold))
         .catch((e) => (error = true));
       if (ingredients[ingredient] >= ingredientsNeeded[ingredient]) {
         ingredientsCheckList[ingredient] = true;
@@ -56,7 +57,9 @@ function selectRecipeRandom(max) {
 
 async function getFood(req, res) {
   const randomRecipe = selectRecipeRandom(numberOfRecipes);
+
   const recipeToDo = recipes[randomRecipe];
+
   const ingredientsOnKitchen = validateIngredients(recipeToDo);
   if (ingredientsOnKitchen === true) {
     decreaseIngredientsOnKitchen(recipeToDo);
